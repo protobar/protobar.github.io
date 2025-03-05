@@ -1,356 +1,1478 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Muhammad Shayan | 3D Artist & Game Developer</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Muhammad Shayan's portfolio - 3D artist and game developer specializing in 3D modeling, animation, and Unity game development.">
-  <meta name="keywords" content="3D artist, game developer, Unity, animation, 3D modeling">
-  <meta name="author" content="Muhammad Shayan">
-  <link rel="stylesheet" href="assets/css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #a67c52;
+            --secondary: #8b4513;
+            --accent: #ff6d00;
+            --dark: #1a1410;
+            --light: #f5e6d8;
+            --mid: #735751;
+            --panel: #2a201c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(26, 20, 16, 0.97), rgba(26, 20, 16, 0.97)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b4513' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            border-bottom: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(26, 20, 16, 0.9);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        /* Navigation Styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            position: relative;
+            padding: 5px 8px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            background-color: rgba(166, 124, 82, 0.1);
+        }
+        
+        /* Main Content Styles */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        section {
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 2px solid var(--secondary);
+            background-color: var(--panel);
+            position: relative;
+            display: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+        
+        section.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 10px;
+            text-shadow: 2px 2px var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+        }
+        
+        /* Home Page */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .hero-text {
+            width: 50%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-text h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 2px 2px var(--dark);
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+        
+        .hero-image {
+            width: 40%;
+            height: 300px;
+            position: relative;
+            border: 3px solid var(--secondary);
+            overflow: hidden;
+        }
+        
+        .canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--accent);
+            white-space: nowrap;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent); }
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--secondary);
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .project-card {
+            border: 2px solid var(--primary);
+            padding: 20px;
+            transition: all 0.3s ease;
+            background-color: rgba(42, 32, 28, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, var(--accent), var(--primary), var(--secondary), var(--accent));
+            z-index: -1;
+            background-size: 400%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-card:hover::before {
+            opacity: 1;
+            animation: animate 20s linear infinite;
+        }
+        
+        @keyframes animate {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+        }
+        
+        .project-card h3 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-card h3 i {
+            margin-right: 10px;
+        }
+        
+        .project-card p {
+            margin-bottom: 15px;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--mid);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tech-tag {
+            padding: 3px 8px;
+            background-color: var(--secondary);
+            color: var(--light);
+            font-size: 0.8rem;
+            border-radius: 3px;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        .about-image {
+            flex: 0 0 300px;
+            height: 300px;
+            position: relative;
+            border: 3px solid var(--primary);
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        .skills {
+            margin-top: 30px;
+        }
+        
+        .skills h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skills h4 i {
+            margin-right: 10px;
+        }
+        
+        .skill-category {
+            margin-bottom: 20px;
+        }
+        
+        .skill-bars {
+            margin-top: 15px;
+        }
+        
+        .skill-bar {
+            margin-bottom: 15px;
+        }
+        
+        .skill-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .skill-icon {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .skill-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .skill-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            width: 0%;
+            transition: width 1s ease;
+            position: relative;
+            border-radius: 5px;
+        }
+        
+        .skill-bar-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg, 
+                rgba(255, 255, 255, 0.15) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255, 255, 255, 0.15) 50%, 
+                rgba(255, 255, 255, 0.15) 75%, 
+                transparent 75%, 
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: skill-animation 1s linear infinite;
+        }
+        
+        @keyframes skill-animation {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 0; }
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .contact-details {
+            margin-bottom: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-item i {
+            width: 30px;
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .contact-form {
+            flex: 2;
+            background-color: rgba(42, 32, 28, 0.5);
+            padding: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(26, 20, 16, 0.7);
+            border: 1px solid var(--secondary);
+            color: var(--light);
+            font-family: 'Courier New', monospace;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 5px rgba(255, 109, 0, 0.5);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* 3D Viewer */
+        .model-viewer {
+            width: 100%;
+            height: 400px;
+            border: 3px solid var(--primary);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .model-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .model-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .model-option {
+            padding: 5px 10px;
+            background-color: var(--panel);
+            border: 1px solid var(--secondary);
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .model-option.active {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 2px solid var(--primary);
+            background-color: var(--panel);
+            position: relative;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+        
+        /* Retro Scanlines */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(0, 0, 0, 0.03) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0.2;
+        }
+        
+        /* CRT Switch Effect */
+        .crt-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .crt-switch span {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--dark);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid var(--secondary);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--primary);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--secondary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(15px);
+            background-color: var(--accent);
+        }
+        
+        .crt-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle at center,
+                transparent 30%,
+                rgba(0, 0, 0, 0.15) 90%
+            );
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+        
+        .crt-effect.active {
+            display: block;
+        }
+        
+        /* Pixel Dust Effect */
+        .dust-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text,
+            .hero-image {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .contact-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- notification for small viewports and landscape oriented smartphones -->
-<div class="device-notification">
-  <a class="device-notification--logo" href="#0">
-    <img src="assets/img/logo.png" alt="Portfolio">
-    <p>Muhammad Shayan</p>
-  </a>
-  <p class="device-notification--message">Please view on a larger screen for the full experience.</p>
-</div>
-
-<div class="perspective effect-rotate-left">
-  <div class="container"><div class="outer-nav--return"></div>
-    <div id="viewport" class="l-viewport">
-      <div class="l-wrapper">
-        <header class="header">
-          <a class="header--logo" href="#0">
-            <img src="assets/img/Final_logo.png" alt="Portfolio">
-            <p>Muhammad Shayan</p>
-          </a>
-          <button class="header--cta cta">Hire Me</button>
-          <div class="header--nav-toggle">
-            <span></span>
-          </div>
-        </header>
-        <nav class="l-side-nav">
-          <ul class="side-nav">
-            <li class="is-active"><span>Home</span></li>
-            <li><span>Works</span></li>
-            <li><span>About</span></li>
-            <li><span>Contact</span></li>
-            <li><span>Hire Me</span></li>
-          </ul>
-        </nav>
-        <ul class="l-main-content main-content">
-          <li class="l-section section section--is-active">
-            <div class="intro">
-              <div class="intro--banner">
-                <h1>3D Artist &<br>Game Developer</h1>
-                <button class="cta">Hire Me
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-                    <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
-                  </g>
-                  </svg>
-                  <span class="btn-background"></span>
-                </button>
-                <img src="assets/img/hotman.png" alt="Welcome">
-              </div>
-              <div class="intro--options">
-                <a href="#0">
-                  <h3>Chelion Renewables Product Animation</h3>
-                  <p>A visually stunning product animation integrating energy management with global storage solutions.</p>
-                </a>
-                <a href="#0">
-                  <h3>Smart City Isometric Animation</h3>
-                  <p>Produced a 4K looping GIF for a client's website, showcasing a smart city in isometric view.</p>
-                </a>
-                <a href="#0">
-                  <h3>Sphere Dodge (Unity 3D Game)</h3>
-                  <p>An endless dodging game with procedural obstacle generation and a scoring system.</p>
-                </a>
-              </div>
-            </div>
-          </li>
-
-          <!-- Projects Section -->
-<li class="l-section section">
-  <div class="work">
-    <h2>Selected Work</h2>
-    <div class="work--lockup">
-      <ul class="slider">
-        <!-- Project 1 -->
-        <li class="slider--item slider--item-left">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/tagRoyale.png" alt="Tag Royale">
-            </div>
-            <p class="slider--item-title">Tag Royale</p>
-            <p class="slider--item-description">Splash screen for an online multiplayer game showcasing a dramatic lightning strike as a player spawns.</p>
-          </a>
-        </li>
-        <!-- Project 2 -->
-        <li class="slider--item slider--item-center">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/gas.png" alt="Abandoned Gas Station">
-            </div>
-            <p class="slider--item-title">Abandoned Gas Station</p>
-            <p class="slider--item-description">A spectral forest scene featuring an Impala in an abandoned gas station. Modeled, textured, and rendered in Blender.</p>
-          </a>
-        </li>
-        <!-- Project 3 -->
-        <li class="slider--item slider--item-right">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/C2.png" alt="Courage the Cowardly Dog">
-            </div>
-            <p class="slider--item-title">Courage The Cowardly Dog</p>
-            <p class="slider--item-description">A haunting recreation of Courage the Cowardly Dog's house. Modeled and rendered in Blender.</p>
-          </a>
-        </li>
-        <!-- Project 4 -->
-        <li class="slider--item slider--item-left">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/blur.png" alt="Blur Miss">
-            </div>
-            <p class="slider--item-title">Blur Miss</p>
-            <p class="slider--item-description">Two racing cars crossing each other at high speeds, creating an intense motion blur effect. Made in Blender.</p>
-          </a>
-        </li>
-        <!-- Project 5 -->
-        <li class="slider--item slider--item-center">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/iso.png" alt="Iso Conveyer">
-            </div>
-            <p class="slider--item-title">Iso Conveyer</p>
-            <p class="slider--item-description">An engaging 30-second isometric animation showcasing factory processes from forging to human verification.</p>
-          </a>
-        </li>
-        <!-- Project 6 -->
-        <li class="slider--item slider--item-right">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/lone.png" alt="Lone Tree">
-            </div>
-            <p class="slider--item-title">Lone Tree</p>
-            <p class="slider--item-description">A peaceful scene featuring a lone figure sitting beneath a tree, showcasing solitude and reflection.</p>
-          </a>
-        </li>
-        <!-- Project 7 -->
-        <li class="slider--item slider--item-left">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/cabin.png" alt="Croco Lake">
-            </div>
-            <p class="slider--item-title">Snowy Cabin</p>
-            <p class="slider--item-description">A Snowy Cabin giving the feeling of extreme winters and blue evening.</p>
-          </a>
-        </li>
-        <!-- Project 8 -->
-        <li class="slider--item slider--item-center">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/Skely3.png" alt="Chelion Renewables">
-            </div>
-            <p class="slider--item-title">Fly High</p>
-            <p class="slider--item-description">A fantasy world where a blooming skeleton is rising up in the air.</p>
-          </a>
-        </li>
-        <!-- Project 9 -->
-        <li class="slider--item slider--item-right">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/smart.png" alt="Smart City Isometric Animation">
-            </div>
-            <p class="slider--item-title">Smart City Isometric Animation</p>
-            <p class="slider--item-description">A high-resolution 4K looping animation depicting a futuristic smart city, designed for a client's website.</p>
-          </a>
-        </li>
-        <!-- Project 10 -->
-        <li class="slider--item slider--item-left">
-          <a href="#0">
-            <div class="slider--item-image">
-              <img src="assets/img/star.png" alt="iMD Image Match Design">
-            </div>
-            <p class="slider--item-title">Starry Night</p>
-            <p class="slider--item-description">Hopeless romantic wearing helmet resting on his Impala while holding roses.</p>
-          </a>
-        </li>
-      </ul>
-      <div class="slider--prev">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-        <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-          <path d="M561,1169C525,1155,10,640,3,612c-3-13,1-36,8-52c8-15,134-145,281-289C527,41,562,10,590,10c22,0,41,9,61,29
-          c55,55,49,64-163,278L296,510h575c564,0,576,0,597,20c46,43,37,109-18,137c-19,10-159,13-590,13l-565,1l182,180
-          c101,99,187,188,193,199c16,30,12,57-12,84C631,1174,595,1183,561,1169z"/>
-        </g>
-        </svg>
-      </div>
-      <div class="slider--next">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-        <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-          <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
-        </g>
-        </svg>
-      </div>
+    <!-- CRT Switch -->
+    <div class="crt-switch">
+        <span>CRT Mode</span>
+        <label class="switch">
+            <input type="checkbox" id="crt-toggle">
+            <span class="slider"></span>
+        </label>
     </div>
-  </div>
-</li>
-
-
-          <!-- About Section -->
-          <li class="l-section section">
-            <div class="about">
-              <div class="about--banner">
-                <h2>Muhammad Shayan</h2>
-                <h3>3D Artist & Game Developer</h3>
-                <p>Specialize in creating 3D experiences and developing games.<br> My work involves 3D modeling, animation, and rendering, alongside Game development.</p>
-                <img src="assets/img/about-visual.png" alt="About Me">
-              </div>
-            </div>
-          </li>
-
-          <!-- Contact Section -->
-          <li class="l-section section">
-            <div class="contact">
-              <div class="contact--lockup">
-                <div class="modal">
-                  <div class="modal--information">
-                    <p>Islamabad, Pakistan</p>
-                    <a href="mailto:mshayan4506@gmail.com">mshayan4506@gmail.com</a>
-                    <a href="tel:+923005506566">+92 300 5506566</a>
-                  </div>
-                  <ul class="modal--options">
-                    <li><a href="https://www.linkedin.com/in/proto-mos">LinkedIn</a></li>
-                    <li><a href="https://www.behance.net/animatendi">Behance</a></li>
-                    <li><a href="https://protobar.artstation.com/">ArtStation</a></li>
-                  </ul>
+    
+    <!-- CRT Effect Overlay -->
+    <div class="crt-effect" id="crt-effect"></div>
+    
+    <!-- Dust Particles Canvas -->
+    <canvas class="dust-particles" id="dust-particles"></canvas>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo"><i class="fas fa-cube"></i>RETRO<span style="color: var(--accent)">DEV</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="#projects" class="nav-link"><i class="fas fa-gamepad"></i>Projects</a></li>
+                    <li><a href="#about" class="nav-link"><i class="fas fa-user"></i>About Me</a></li>
+                    <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i>Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="active">
+            <h1 class="section-title"><i class="fas fa-cube"></i>Game Developer & 3D Artist</h1>
+            <div class="hero">
+                <div class="hero-text">
+                    <h2 class="typewriter">Muhammad Shayan</h2>
+                    <p>With a passion for game development and 3D artistry, I blend technical expertise with creative vision to craft immersive interactive experiences that push boundaries and captivate players.</p>
+                    <a href="#projects" class="btn nav-link"><i class="fas fa-eye"></i> View My Work</a>
                 </div>
-              </div>
+                <div class="hero-image">
+                    <div id="hero-canvas" class="canvas-container"></div>
+                </div>
             </div>
-          </li>
-         <!-- Hire Me Section-->
-<li class="l-section section">
-  <div class="hire">
-    <h2>Select the Service</h2>
-    <form class="work-request" action="https://formspree.io/f/mdkonbea" method="POST">
-      <div class="work-request--options">
-        <span class="options-a">
-          <input id="opt-1" type="checkbox" name="services[]" value="3D Modeling">
-          <label for="opt-1">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            3D Modeling
-          </label>
-          <input id="opt-2" type="checkbox" name="services[]" value="Product Animation">
-          <label for="opt-2">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            Product Animation
-          </label>
-          <input id="opt-3" type="checkbox" name="services[]" value="Character Animation">
-          <label for="opt-3">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            Character Animation
-          </label>
-        </span>
-        <span class="options-b">
-          <input id="opt-4" type="checkbox" name="services[]" value="Custom Animation">
-          <label for="opt-4">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            Custom Animation
-          </label>
-          <input id="opt-5" type="checkbox" name="services[]" value="Fantasy Renders">
-          <label for="opt-5">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            Fantasy Renders
-          </label>
-          <input id="opt-6" type="checkbox" name="services[]" value="Game Development">
-          <label for="opt-6">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            viewBox="0 0 150 111" style="enable-background:new 0 0 150 111;" xml:space="preserve">
-              <g transform="translate(0.000000,111.000000) scale(0.100000,-0.100000)">
-                <path d="M950,705L555,310L360,505C253,612,160,700,155,700c-6,0-44-34-85-75l-75-75l278-278L550-5l475,475c261,261,475,480,475,485c0,13-132,145-145,145C1349,1100,1167,922,950,705z"/>
-              </g>
-            </svg>
-            Game Development
-          </label>
-        </span>
-      </div>
-      <div class="work-request--information">
-        <div class="information-name">
-          <input id="name" type="text" name="name" required spellcheck="false">
-          <label for="name">Name</label>
+            
+            <h2 style="color: var(--accent); margin: 40px 0 20px; display: flex; align-items: center;">
+                <i class="fas fa-cubes" style="margin-right: 10px;"></i>3D Model Showcase
+            </h2>
+            <p>Check out some of my 3D models. Use the controls to rotate and zoom.</p>
+            <div class="model-viewer">
+                <div id="model-canvas" class="canvas-container"></div>
+            </div>
+            <div class="model-selector">
+                <div class="model-option active" data-model="cube">Cube</div>
+                <div class="model-option" data-model="sphere">Sphere</div>
+                <div class="model-option" data-model="torus">Torus</div>
+            </div>
+            <div class="model-controls">
+                <button id="rotate-model" class="btn"><i class="fas fa-sync"></i> Rotate</button>
+                <button id="stop-model" class="btn"><i class="fas fa-stop"></i> Stop</button>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects">
+            <h1 class="section-title"><i class="fas fa-gamepad"></i>My Projects</h1>
+            <p>Here are some of my recent game development and 3D modeling projects that showcase my technical skills and artistic vision.</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="/api/placeholder/400/320" alt="placeholder">
+                    </div>
+                    <h3><i class="fas fa-ghost"></i>Haunted Pixels</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">Unity</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Blender</span>
+                    </div>
+                    <p>A retro-horror game with pixel art aesthetics and modern lighting effects, creating a uniquely terrifying atmosphere.</p>
+                    <a href="#" class="btn"><i class="fas fa-play"></i> Play Demo</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="/api/placeholder/400/320" alt="placeholder">
+                    </div>
+                    <h3><i class="fas fa-rocket"></i>Quantum Drift</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">Unreal Engine</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">ZBrush</span>
+                    </div>
+                    <p>A high-octane racing game set in a retrofuturistic world with time-bending mechanics and procedurally generated tracks.</p>
+                    <a href="#" class="btn"><i class="fas fa-eye"></i> View Project</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="/api/placeholder/400/320" alt="placeholder">
+                    </div>
+                    <h3><i class="fas fa-robot"></i>Mech Ascension</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">Godot</span>
+                        <span class="tech-tag">GDScript</span>
+                        <span class="tech-tag">Substance Painter</span>
+                    </div>
+                    <p>A tactical mech combat game with deep customization systems and a hand-crafted dystopian world to explore.</p>
+                    <a href="#" class="btn"><i class="fas fa-eye"></i> View Project</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="/api/placeholder/400/320" alt="placeholder">
+                    </div>
+                    <h3><i class="fas fa-mountain"></i>Ancient Vistas</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">3D Art</span>
+                        <span class="tech-tag">Maya</span>
+                        <span class="tech-tag">Blender</span>
+                    </div>
+                    <p>A collection of detailed 3D environments inspired by ancient civilizations, showcasing advanced material work and lighting techniques.</p>
+                    <a href="#" class="btn"><i class="fas fa-images"></i> View Gallery</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about">
+            <h1 class="section-title"><i class="fas fa-user"></i>About Me</h1>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="/api/placeholder/400/400" alt="placeholder">
+                </div>
+                <div class="about-text">
+                    <h3>Game Developer & 3D Artist with a Passion for Innovation</h3>
+                    <p>With over 5 years of experience in game development and 3D modeling, I've had the privilege of working on a diverse range of projects from indie titles to AAA productions. My journey began with a fascination for how games create immersive worlds and evolved into a career where I blend technical expertise with artistic vision.</p>
+                    <p>I specialize in creating atmospheric environments and optimizing game assets for performance. My approach combines old-school gaming aesthetics with modern rendering techniques to create unique visual experiences.</p>
+                </div>
+            </div>
+            
+            <div class="skills">
+                <div class="skill-category">
+                    <h4><i class="fas fa-code"></i>Development Skills</h4>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fab fa-unity skill-icon"></i>Unity/C#</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fas fa-code-branch skill-icon"></i>C++</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4><i class="fas fa-paint-brush"></i>3D Skills</h4>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fas fa-cube skill-icon"></i>Blender</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fas fa-object-group skill-icon"></i>3D Animation</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fas fa-layer-group skill-icon"></i>3D Modeling</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-label">
+                                <span><i class="fas fa-pencil-alt skill-icon"></i>Sculpting</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact">
+            <h1 class="section-title"><i class="fas fa-envelope"></i>Get In Touch</h1>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Work Together</h3>
+                    <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Islamabad, Pakistan</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>mshayan4506@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+923005506566</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/protobar" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://protobar.artstation.com/" class="social-link"><i class="fab fa-artstation"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/protobar" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="https://protobar.artstation.com/" class="social-link"><i class="fab fa-artstation"></i></a>
+            </div>
+            <p>&copy; 2025 RETRODEV. All Rights Reserved.</p>
         </div>
-        <div class="information-email">
-          <input id="email" type="email" name="email" required spellcheck="false">
-          <label for="email">Email</label>
-        </div>
-      </div>
-      <input type="submit" value="Send Request">
-    </form>
-  </div>
-</li>
-
-  <ul class="outer-nav">
-    <li class="is-active">Home</li>
-    <li>Works</li>
-    <li>About</li>
-    <li>Contact</li>
-    <li>Hire us</li>
-  </ul>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
-<script src="assets/js/functions-min.js"></script>
-</body>
-</html>
-          
-        </ul>
-      </div>
-    </div>
-  </div>
-  <ul class="outer-nav">
-    <li class="is-active">Home</li>
-    <li>Works</li>
-    <li>About</li>
-    <li>Contact</li>
-    <li>Hire Me</li>
-  </ul>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
-<script src="assets/js/functions-min.js"></script>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Get the target section id
+                const targetId = this.getAttribute('href').substring(1);
+                
+                // Hide all sections
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                document.getElementById(targetId).classList.add('active');
+                
+                // Animate skill bars if About section is active
+                if (targetId === 'about') {
+                    animateSkillBars();
+                }
+            });
+        });
+        
+        // Animate skill bars
+        function animateSkillBars() {
+            document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width + '%';
+                }, 100);
+            });
+        }
+        
+        // CRT Mode Toggle
+        const crtToggle = document.getElementById('crt-toggle');
+        const crtEffect = document.getElementById('crt-effect');
+        
+        crtToggle.addEventListener('change', function() {
+            if (this.checked) {
+                crtEffect.classList.add('active');
+                document.body.style.filter = 'contrast(1.1) brightness(0.9)';
+                document.body.style.animation = 'flicker 0.15s infinite';
+            } else {
+                crtEffect.classList.remove('active');
+                document.body.style.filter = 'none';
+                document.body.style.animation = 'none';
+            }
+        });
+        
+        // Add flicker keyframes
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes flicker {
+                0% { opacity: 0.97; }
+                5% { opacity: 0.95; }
+                10% { opacity: 0.97; }
+                15% { opacity: 0.94; }
+                20% { opacity: 0.98; }
+                25% { opacity: 0.97; }
+                30% { opacity: 0.95; }
+                35% { opacity: 0.96; }
+                40% { opacity: 0.97; }
+                45% { opacity: 0.94; }
+                50% { opacity: 0.98; }
+                55% { opacity: 0.96; }
+                60% { opacity: 0.97; }
+                65% { opacity: 0.98; }
+                70% { opacity: 0.95; }
+                75% { opacity: 0.97; }
+                80% { opacity: 0.94; }
+                85% { opacity: 0.97; }
+                90% { opacity: 0.98; }
+                95% { opacity: 0.96; }
+                100% { opacity: 0.97; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Three.js Hero Animation
+        let heroScene, heroCamera, heroRenderer;
+        let heroMesh, heroLight;
+        
+        function initHeroCanvas() {
+            const container = document.getElementById('hero-canvas');
+            
+            // Create scene
+            heroScene = new THREE.Scene();
+            heroScene.background = new THREE.Color(0x1a1410);
+            
+            // Create camera
+            heroCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            heroCamera.position.z = 5;
+            
+            // Create renderer
+            heroRenderer = new THREE.WebGLRenderer({ antialias: true });
+            heroRenderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(heroRenderer.domElement);
+            
+            // Create grid helper
+            const gridHelper = new THREE.GridHelper(20, 20, 0xff6d00, 0xa67c52);
+            heroScene.add(gridHelper);
+            
+            // Add retrowave sun
+            const sunGeometry = new THREE.CircleGeometry(2, 32);
+            const sunMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xff6d00,
+                side: THREE.DoubleSide 
+            });
+            const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+            sun.position.set(0, 1, -5);
+            heroScene.add(sun);
+            
+            // Add terrain
+            const terrainGeometry = new THREE.PlaneGeometry(20, 20, 20, 20);
+            const terrainMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x8b4513,
+                wireframe: true,
+                emissive: 0xa67c52,
+                emissiveIntensity: 0.2,
+                side: THREE.DoubleSide
+            });
+            const terrain = new THREE.Mesh(terrainGeometry, terrainMaterial);
+            terrain.rotation.x = Math.PI / 2;
+            terrain.position.y = -2;
+            heroScene.add(terrain);
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            heroScene.add(ambientLight);
+            
+            // Add directional light
+            heroLight = new THREE.DirectionalLight(0xff6d00, 1);
+            heroLight.position.set(1, 1, 1);
+            heroScene.add(heroLight);
+            
+            // Animate
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate grid
+                gridHelper.rotation.y += 0.005;
+                
+                // Rotate terrain slightly
+                terrain.rotation.z += 0.002;
+                
+                // Render scene
+                heroRenderer.render(heroScene, heroCamera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                
+                heroCamera.aspect = newWidth / newHeight;
+                heroCamera.updateProjectionMatrix();
+                
+                heroRenderer.setSize(newWidth, newHeight);
+            });
+        }
+        
+        // Three.js 3D Model Viewer
+        let modelScene, modelCamera, modelRenderer;
+        let modelMesh, modelControls;
+        let autoRotate = false;
+        
+        function initModelCanvas() {
+            const container = document.getElementById('model-canvas');
+            
+            // Create scene
+            modelScene = new THREE.Scene();
+            modelScene.background = new THREE.Color(0x1a1410);
+            
+            // Create camera
+            modelCamera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            modelCamera.position.z = 5;
+            
+            // Create renderer
+            modelRenderer = new THREE.WebGLRenderer({ antialias: true });
+            modelRenderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(modelRenderer.domElement);
+            
+            // Add grid helper
+            const gridHelper = new THREE.GridHelper(10, 10, 0xa67c52, 0x8b4513);
+            modelScene.add(gridHelper);
+            
+            // Create default model (cube)
+            createModel('cube');
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            modelScene.add(ambientLight);
+            
+            // Add directional light
+            const directionalLight = new THREE.DirectionalLight(0xff6d00, 1);
+            directionalLight.position.set(1, 1, 1);
+            modelScene.add(directionalLight);
+            
+            // Add point light
+            const pointLight = new THREE.PointLight(0xa67c52, 1, 100);
+            pointLight.position.set(0, 3, 0);
+            modelScene.add(pointLight);
+            
+            // Animate
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                if (autoRotate && modelMesh) {
+                    modelMesh.rotation.y += 0.01;
+                    modelMesh.rotation.x += 0.005;
+                }
+                
+                modelRenderer.render(modelScene, modelCamera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                
+                modelCamera.aspect = newWidth / newHeight;
+                modelCamera.updateProjectionMatrix();
+                
+                modelRenderer.setSize(newWidth, newHeight);
+            });
+        }
+        
+        function createModel(type) {
+            // Remove existing model if any
+            if (modelMesh) {
+                modelScene.remove(modelMesh);
+            }
+            
+            let geometry;
+            
+            switch(type) {
+                case 'cube':
+                    geometry = new THREE.BoxGeometry(2, 2, 2);
+                    break;
+                case 'sphere':
+                    geometry = new THREE.SphereGeometry(1.5, 32, 32);
+                    break;
+                case 'torus':
+                    geometry = new THREE.TorusGeometry(1, 0.4, 16, 100);
+                    break;
+                default:
+                    geometry = new THREE.BoxGeometry(2, 2, 2);
+            }
+            
+            // Create material with wireframe
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0xff6d00,
+                wireframe: false,
+                emissive: 0xa67c52,
+                emissiveIntensity: 0.2,
+                specular: 0xffffff,
+                shininess: 100
+            });
+            
+            // Create wireframe material
+            const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xa67c52, 
+                wireframe: true 
+            });
+            
+            // Create mesh with both materials
+            modelMesh = new THREE.Mesh(geometry, material);
+            const wireframe = new THREE.Mesh(geometry, wireframeMaterial);
+            modelMesh.add(wireframe);
+            
+            modelScene.add(modelMesh);
+        }
+        
+        // Model Selector
+        document.querySelectorAll('.model-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove active class from all options
+                document.querySelectorAll('.model-option').forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                this.classList.add('active');
+                
+                // Create selected model
+                createModel(this.getAttribute('data-model'));
+            });
+        });
+        
+        // Model Rotation Controls
+        document.getElementById('rotate-model').addEventListener('click', function() {
+            autoRotate = true;
+        });
+        
+        document.getElementById('stop-model').addEventListener('click', function() {
+            autoRotate = false;
+        });
+        
+        // Dust Particles Effect
+        const dustCanvas = document.getElementById('dust-particles');
+        let dustCtx, dustParticles = [];
+        
+        function initDustParticles() {
+            dustCanvas.width = window.innerWidth;
+            dustCanvas.height = window.innerHeight;
+            dustCtx = dustCanvas.getContext('2d');
+            
+            // Create particles
+            for (let i = 0; i < 100; i++) {
+                dustParticles.push({
+                    x: Math.random() * dustCanvas.width,
+                    y: Math.random() * dustCanvas.height,
+                    radius: Math.random() * 2,
+                    color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 255, ${Math.random() * 0.5 + 0.1})`,
+                    speedX: Math.random() * 0.5 - 0.25,
+                    speedY: Math.random() * 0.5 - 0.25
+                });
+            }
+            
+            // Animate particles
+            function animateDust() {
+                requestAnimationFrame(animateDust);
+                
+                dustCtx.clearRect(0, 0, dustCanvas.width, dustCanvas.height);
+                
+                dustParticles.forEach(particle => {
+                    // Move particle
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Reset if off screen
+                    if (particle.x < 0) particle.x = dustCanvas.width;
+                    if (particle.x > dustCanvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = dustCanvas.height;
+                    if (particle.y > dustCanvas.height) particle.y = 0;
+                    
+                    // Draw particle
+                    dustCtx.beginPath();
+                    dustCtx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    dustCtx.fillStyle = particle.color;
+                    dustCtx.fill();
+                });
+            }
+            
+            animateDust();
+        }
+        
+        // Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple form validation
+            if (name && email && subject && message) {
+                // In a real scenario, you would send this data to a server
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            } else {
+                alert('Please fill all fields.');
+            }
+        });
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Three.js canvases
+            initHeroCanvas();
+            initModelCanvas();
+            
+            // Initialize dust particles
+            initDustParticles();
+            
+            // Animate skill bars if about section is initially active
+            if (document.getElementById('about').classList.contains('active')) {
+                animateSkillBars();
+            }
+        });
+    </script>
 </body>
 </html>
