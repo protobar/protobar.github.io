@@ -1081,7 +1081,20 @@ input:checked + .slider:before {
 body.crt-mode {
     overflow: hidden;
 }
+/* Ensure scrolling always works in CRT mode */
+html, body {
+    overflow-x: hidden;
+    overflow-y: auto !important; /* Force scrolling to work */
+}
 
+.crt-mode {
+    overflow-y: auto !important; /* Force scrolling in CRT mode */
+}
+
+/* Make sure overlay elements never block interaction */
+.crt-effect, .scanlines, .crt-overlay {
+    pointer-events: none !important;
+}
 body.crt-mode::before {
     content: "";
     position: fixed;

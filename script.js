@@ -55,8 +55,25 @@ crtToggle.addEventListener('change', function() {
 function enableCRTMode() {
     crtEffect.classList.add('active');
     document.body.classList.add('crt-mode');
-    document.body.style.filter = 'contrast(1.1) brightness(0.9) saturate(1.2)';
-    document.body.style.animation = 'flicker 0.15s infinite';
+    
+    // IMPORTANT: These properties are safer for scrolling
+    // instead of applying to body, apply to a container
+    const overlay = document.createElement('div');
+    overlay.className = 'crt-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.pointerEvents = 'none';
+    overlay.style.zIndex = '4';
+    overlay.style.mixBlendMode = 'overlay';
+    overlay.style.backgroundColor = 'rgba(166, 124, 82, 0.05)';
+    document.body.appendChild(overlay);
+    
+    // IMPORTANT: Do NOT apply filter to body - causes scroll issues
+    // Instead add visual effects using other means
+    // document.body.style.filter = 'contrast(1.1) brightness(0.9) saturate(1.2)';
     
     // Add RGB split effect to various elements
     document.querySelectorAll('h1, h2, h3, .logo, .btn').forEach(el => {
@@ -66,6 +83,10 @@ function enableCRTMode() {
     // Add scanline texture
     addScanlineTexture();
     
+    // CRITICAL: Explicitly ensure scrolling is enabled 
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+    
     // Save state to localStorage
     localStorage.setItem('crtMode', 'enabled');
 }
@@ -73,8 +94,10 @@ function enableCRTMode() {
 function disableCRTMode() {
     crtEffect.classList.remove('active');
     document.body.classList.remove('crt-mode');
-    document.body.style.filter = 'none';
-    document.body.style.animation = 'none';
+    
+    // Remove overlay
+    const overlay = document.querySelector('.crt-overlay');
+    if (overlay) overlay.remove();
     
     // Remove RGB split effect
     document.querySelectorAll('h1, h2, h3, .logo, .btn').forEach(el => {
@@ -83,6 +106,10 @@ function disableCRTMode() {
     
     // Remove scanline texture
     removeScanlineTexture();
+    
+    // CRITICAL: Ensure scrolling is enabled
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
     
     // Save state to localStorage
     localStorage.setItem('crtMode', 'disabled');
@@ -101,19 +128,19 @@ function addScanlineTexture() {
     scanlines.style.height = '100%';
     scanlines.style.backgroundImage = 'linear-gradient(0deg, transparent 0%, rgba(32, 128, 32, 0.05) 2%, rgba(32, 128, 32, 0.05) 3%, transparent 3%, transparent 9%, rgba(32, 128, 32, 0.05) 10%, rgba(32, 128, 32, 0.05) 11%, transparent 11%, transparent 19%, rgba(32, 128, 32, 0.05) 20%, rgba(32, 128, 32, 0.05) 21%, transparent 21%)';
     scanlines.style.backgroundSize = '100% 20px';
-    scanlines.style.zIndex = '9999';
-    scanlines.style.pointerEvents = 'none';
-    scanlines.style.animation = 'moveDown 3s linear infinite';
+    scanlines.style.zIndex = '3'; // Lower z-index than overlay
+    scanlines.style.pointerEvents = 'none'; // CRITICALLY IMPORTANT: Ensure it doesn't block interaction
     
-    // Add animation keyframes
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes moveDown {
-            from { background-position: 0 0; }
-            to { background-position: 0 20px; }
+    // Use manual background position changes instead of animation
+    let position = 0;
+    function moveLines() {
+        position = (position + 1) % 20;
+        scanlines.style.backgroundPosition = `0 ${position}px`;
+        if (document.querySelector('.scanlines')) {
+            requestAnimationFrame(moveLines);
         }
-    `;
-    document.head.appendChild(style);
+    }
+    requestAnimationFrame(moveLines);
     
     document.body.appendChild(scanlines);
 }
@@ -458,11 +485,31 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value;
     
-    // Simple form validation
+    // Form validation
     if (name && email && subject && message) {
-        // In a real scenario, you would send this data to a server
-        alert('Thank you for your message! I will get back to you soon.');
-        this.reset();
+        const formStatus = document.getElementById('form-status');
+        
+        fetch(this.action, {
+            method: this.method,
+            body: new FormData(this),
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                formStatus.innerHTML = '<div style="color:green; padding:10px; border:1px solid green;">Thank you for your message! I will get back to you soon.</div>';
+                formStatus.style.display = 'block';
+                this.reset();
+            } else {
+                formStatus.innerHTML = '<div style="color:red; padding:10px; border:1px solid red;">Something went wrong. Please try again.</div>';
+                formStatus.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            formStatus.innerHTML = '<div style="color:red; padding:10px; border:1px solid red;">Error: ' + error.message + '</div>';
+            formStatus.style.display = 'block';
+        });
     } else {
         alert('Please fill all fields.');
     }
