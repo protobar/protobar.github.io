@@ -1,0 +1,484 @@
+/* Theme Variables */
+
+/* Default Theme: Cyberpunk Neon */
+:root {
+  /* Primary Colors */
+  --primary-dark: #010914;
+  --primary-medium: #1A0B35;
+  --primary-light: #2B50AA;
+  --accent-color: #FF41B4;
+  --highlight-color: #00F0FF;
+  
+  /* Secondary Colors */
+  --secondary-1: #A359FF;
+  --secondary-2: #FFDE59;
+  --secondary-3: #FF8C42;
+  
+  /* Background Colors */
+  --bg-dark: #010914;
+  --bg-medium: #1A0B35;
+  --grid-color: rgba(0, 240, 255, 0.15);
+  
+  /* Text Colors */
+  --text-light: #FFFFFF;
+  --text-dim: rgba(255, 255, 255, 0.7);
+  
+  /* Effect Colors */
+  --glow-color: var(--highlight-color);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Brownish Retro Theme */
+[data-theme="brownish"] {
+  /* Primary Colors */
+  --primary-dark: #2C1B06;
+  --primary-medium: #64442C;
+  --primary-light: #A57D52;
+  --accent-color: #D4B483;
+  --highlight-color: #F1DAC4;
+  
+  /* Secondary Colors */
+  --secondary-1: #8D6B48;
+  --secondary-2: #BF8C60;
+  --secondary-3: #915F3A;
+  
+  /* Background Colors */
+  --bg-dark: #1A1006;
+  --bg-medium: #2C1B06;
+  --grid-color: rgba(164, 124, 82, 0.2);
+  
+  /* Text Colors */
+  --text-light: #F1DAC4;
+  --text-dim: rgba(241, 218, 196, 0.7);
+  
+  /* Effect Colors */
+  --glow-color: var(--highlight-color);
+  --shadow-color: rgba(26, 16, 6, 0.7);
+}
+
+/* Retro Byte Green Theme */
+[data-theme="green"] {
+  /* Primary Colors */
+  --primary-dark: #002800;
+  --primary-medium: #004D00;
+  --primary-light: #00FF00;
+  --accent-color: #7FFF00;
+  --highlight-color: #CCFF99;
+  
+  /* Secondary Colors */
+  --secondary-1: #00BB00;
+  --secondary-2: #00DD00;
+  --secondary-3: #009900;
+  
+  /* Background Colors */
+  --bg-dark: #001400;
+  --bg-medium: #002800;
+  --grid-color: rgba(0, 255, 0, 0.15);
+  
+  /* Text Colors */
+  --text-light: #00FF00;
+  --text-dim: rgba(0, 255, 0, 0.7);
+  
+  /* Effect Colors */
+  --glow-color: var(--primary-light);
+  --shadow-color: rgba(0, 20, 0, 0.7);
+}
+
+/* Dark Tech Minimalist Theme */
+[data-theme="dark"] {
+  /* Primary Colors */
+  --primary-dark: #121212;
+  --primary-medium: #1E1E1E;
+  --primary-light: #2D2D2D;
+  --accent-color: #3F84E5;
+  --highlight-color: #75E6DA;
+  
+  /* Secondary Colors */
+  --secondary-1: #4A6FA5;
+  --secondary-2: #B8C0C2;
+  --secondary-3: #555555;
+  
+  /* Background Colors */
+  --bg-dark: #000000;
+  --bg-medium: #0A0A0A;
+  --grid-color: rgba(63, 132, 229, 0.1);
+  
+  /* Text Colors */
+  --text-light: #FFFFFF;
+  --text-dim: rgba(255, 255, 255, 0.7);
+  
+  /* Effect Colors */
+  --glow-color: var(--accent-color);
+  --shadow-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Vaporwave Pastel Theme */
+[data-theme="vaporwave"] {
+  /* Primary Colors */
+  --primary-dark: #2D0E36;
+  --primary-medium: #5643CC;
+  --primary-light: #7B5FD9;
+  --accent-color: #FF6AD5;
+  --highlight-color: #8BD3E6;
+  
+  /* Secondary Colors */
+  --secondary-1: #95B8D1;
+  --secondary-2: #F8C8DC;
+  --secondary-3: #E2BBF0;
+  
+  /* Background Colors */
+  --bg-dark: #1E0D26;
+  --bg-medium: #2A1A47;
+  --grid-color: rgba(255, 106, 213, 0.15);
+  
+  /* Text Colors */
+  --text-light: #FFFFFF;
+  --text-dim: rgba(255, 255, 255, 0.8);
+  
+  /* Effect Colors */
+  --glow-color: var(--accent-color);
+  --shadow-color: rgba(30, 13, 38, 0.7);
+}
+
+/* Theme Switcher UI */
+.theme-switcher {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.theme-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-medium);
+  border: 2px solid var(--accent-color);
+  color: var(--text-light);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+.theme-dropdown {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 200px;
+  background: var(--primary-medium);
+  border: 2px solid var(--accent-color);
+  border-radius: 10px;
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px var(--shadow-color);
+}
+
+.theme-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.theme-option:hover {
+  background: var(--primary-light);
+}
+
+.theme-option.active {
+  background: var(--accent-color);
+  color: var(--primary-dark);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid var(--text-light);
+}
+
+/* Theme Swatches */
+.theme-swatch[data-theme="cyberpunk"] {
+  background: linear-gradient(135deg, #FF41B4, #00F0FF);
+}
+
+.theme-swatch[data-theme="brownish"] {
+  background: linear-gradient(135deg, #D4B483, #2C1B06);
+}
+
+.theme-swatch[data-theme="green"] {
+  background: linear-gradient(135deg, #00FF00, #002800);
+}
+
+.theme-swatch[data-theme="dark"] {
+  background: linear-gradient(135deg, #3F84E5, #121212);
+}
+
+.theme-swatch[data-theme="vaporwave"] {
+  background: linear-gradient(135deg, #FF6AD5, #5643CC);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .theme-switcher {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .theme-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .theme-dropdown {
+    width: 180px;
+    padding: 10px;
+    bottom: 50px;
+  }
+  
+  .theme-option {
+    padding: 6px 8px;
+  }
+  
+  .theme-swatch {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-switcher {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .theme-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .theme-dropdown {
+    width: 160px;
+    font-size: 12px;
+  }
+}
+/* Add these styles to your theme-switcher.css file */
+
+/* Theme Transition Effects */
+.theme-transition,
+.theme-transition *,
+.theme-transition *:before,
+.theme-transition *:after {
+  transition: all 0.5s ease;
+  transition-property: background-color, color, border-color, box-shadow, text-shadow, filter, background-image;
+}
+
+/* Enhanced Theme Switcher UI */
+.theme-switcher {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.theme-switcher:hover {
+  transform: scale(1.05);
+}
+
+.theme-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary-medium);
+  border: 2px solid var(--accent-color);
+  color: var(--text-light);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--shadow-color);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.theme-btn:hover,
+.theme-btn:focus {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--glow-color);
+}
+
+.theme-btn:focus {
+  border-color: var(--highlight-color);
+}
+
+.theme-dropdown {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 200px;
+  background: var(--primary-medium);
+  border: 2px solid var(--accent-color);
+  border-radius: 10px;
+  padding: 15px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px var(--shadow-color);
+}
+
+.theme-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  margin-bottom: 5px;
+  outline: none;
+}
+
+.theme-option:hover,
+.theme-option:focus {
+  background: var(--primary-light);
+}
+
+.theme-option.active {
+  background: var(--accent-color);
+  color: var(--primary-dark);
+}
+
+.theme-option:focus {
+  box-shadow: 0 0 0 2px var(--highlight-color);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid var(--text-light);
+  transition: transform 0.3s ease;
+}
+
+.theme-option:hover .theme-swatch,
+.theme-option:focus .theme-swatch {
+  transform: scale(1.2);
+}
+
+/* Improved Theme Swatches */
+.theme-swatch[data-theme="cyberpunk"] {
+  background: linear-gradient(135deg, #FF41B4, #00F0FF);
+  box-shadow: 0 0 10px rgba(255, 65, 180, 0.5);
+}
+
+.theme-swatch[data-theme="brownish"] {
+  background: linear-gradient(135deg, #D4B483, #2C1B06);
+  box-shadow: 0 0 10px rgba(212, 180, 131, 0.5);
+}
+
+.theme-swatch[data-theme="green"] {
+  background: linear-gradient(135deg, #00FF00, #002800);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.theme-swatch[data-theme="dark"] {
+  background: linear-gradient(135deg, #3F84E5, #121212);
+  box-shadow: 0 0 10px rgba(63, 132, 229, 0.5);
+}
+
+.theme-swatch[data-theme="vaporwave"] {
+  background: linear-gradient(135deg, #FF6AD5, #5643CC);
+  box-shadow: 0 0 10px rgba(255, 106, 213, 0.5);
+}
+
+/* Animation for theme change */
+@keyframes themeChange {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+/* Apply animation when theme changes */
+[data-theme] {
+  animation: themeChange 0.5s ease-out;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .theme-switcher {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .theme-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .theme-dropdown {
+    width: 180px;
+    padding: 10px;
+    bottom: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-switcher {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .theme-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .theme-dropdown {
+    width: 160px;
+    font-size: 12px;
+  }
+}
+
+/* Style for browsers that prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *:before,
+  .theme-transition *:after {
+    transition-duration: 0.1s !important;
+  }
+}

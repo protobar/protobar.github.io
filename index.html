@@ -1,493 +1,1142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cyberpunk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Game Dev Portfolio</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetroWave Dev</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/theme-switcher.css">
+    <link rel="stylesheet" href="css/retro-music-player.css">
+    
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
-<body class="loading">
-    <!-- CRT Switch -->
-    <div class="crt-switch">
-        <span>CRT Mode</span>
-        <label class="switch">
-            <input type="checkbox" id="crt-toggle">
-            <span class="slider"></span>
-        </label>
+<body>
+    <!-- Grid Background -->
+    <div class="grid-background"></div>
+    
+    <!-- Retro Overlay Effects -->
+    <div class="retro-effects">
+        <div class="scanline"></div>
+        <div class="noise"></div>
+        <div class="vignette"></div>
     </div>
-    
-    <!-- CRT Effect Overlay -->
-    <div class="crt-effect" id="crt-effect"></div>
-    
-    <!-- Dust Particles Canvas -->
-    <canvas class="dust-particles" id="dust-particles"></canvas>
-    
-    <!-- Add instructions for Konami code -->
-    <div class="easter-egg-hint">
-        <p>Tip: Try the Konami code! <span class="keys">↑↑↓↓←→←→BA</span></p>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="cassette">
+            <div class="cassette-body"></div>
+            <div class="cassette-reel left-reel"></div>
+            <div class="cassette-reel right-reel"></div>
+            <div class="cassette-label">LOADING</div>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
     </div>
-    
+
     <!-- Header -->
     <header>
-        <div class="container header-content">
-            <div class="logo"><i class="fas fa-cube"></i>RETRO<span style="color: var(--accent)">DEV</span></div>
-            <nav>
-                <ul>
-                    <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i>Home</a></li>
-                    <li><a href="#projects" class="nav-link"><i class="fas fa-gamepad"></i>Projects</a></li>
-                    <li><a href="#about" class="nav-link"><i class="fas fa-user"></i>About Me</a></li>
-                    <li><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i>Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">MUHAMMAD<span class="logo-accent"> SHAYAN</span></span>
+                </div>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="#home" class="neon-text active">HOME</a></li>
+                        <li><a href="#projects" class="neon-text">PROJECTS</a></li>
+                        <li><a href="#games" class="neon-text">GAMES</a></li>
+                        <li><a href="#skills" class="neon-text">SKILLS</a></li>
+                        <li><a href="#about" class="neon-text">ABOUT</a></li>
+                        <li><a href="#contact" class="neon-text">CONTACT</a></li>
+                    </ul>
+                    <div class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
-    
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Home Section -->
-        <section id="home" class="active">
-            <h1 class="section-title"><i class="fas fa-cube"></i>Game Developer & 3D Artist</h1>
-            <div class="hero">
-                <div class="hero-text">
-                    <h2 class="typewriter">Muhammad Shayan</h2>
-                    <p>With a passion for game development and 3D artistry, I blend technical expertise with creative vision to craft immersive interactive experiences that push boundaries and captivate players.</p>
-                    <a href="#projects" class="btn nav-link"><i class="fas fa-eye"></i> View My Work</a>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="glitch" data-text="GAME DEV & 3D ARTIST">GAME DEV & 3D ARTIST</h1>
+                <h2 class="subtitle">Creating <span class="typed-text"></span></h2>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn primary-btn">VIEW PROJECTS</a>
+                    <a href="#contact" class="btn secondary-btn">GET IN TOUCH</a>
                 </div>
-                <div class="hero-image">
-                    <div id="hero-canvas" class="canvas-container"></div>
+            </div>
+        </div>
+        <div class="hero-model-container">
+            <canvas id="hero-model"></canvas>
+        </div>
+        <div class="sun-container">
+            <div class="sun"></div>
+            <div class="sun-reflection"></div>
+        </div>
+        <div class="mountains"></div>
+    </section>
+
+    <!-- Projects Section -->
+<section id="projects" class="projects">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title neon-text">FEATURED PROJECTS</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <div class="project-tabs text-center">
+            <button class="tab-btn active" data-filter="all">ALL</button>
+            <button class="tab-btn" data-filter="game">GAMES</button>
+            <button class="tab-btn" data-filter="3d">3D RENDERS</button>
+            <button class="tab-btn" data-filter="engine">ENGINES</button>
+        </div>
+        
+        <div class="project-grid">
+            <!-- Project 1 - Tag Royale -->
+            <div class="project-card" data-category="game">
+                <div class="project-image">
+                    <img src="src/tag.png" alt="Tag Royale">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">TAG ROYALE</h3>
+                            <p class="project-description">A fast-paced multiplayer game where players must avoid being "tagged" while trying to pass the tag onto others.</p>
+                            <div class="project-tags">
+                                <span>Unity</span>
+                                <span>Multiplayer</span>
+                                <span>Blender</span>
+                            </div>
+                            <a href="#" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <h2 style="color: var(--accent); margin: 40px 0 20px; display: flex; align-items: center;">
-                <i class="fas fa-cubes" style="margin-right: 10px;"></i>3D Model Showcase
-            </h2>
-            <p>Check out some of my 3D models. Use the controls to rotate and zoom.</p>
-            <div class="model-viewer">
-                <div id="model-canvas" class="canvas-container"></div>
+            <!-- Project 2 - Equation Escape -->
+            <div class="project-card" data-category="game">
+                <div class="project-image">
+                    <img src="src/equation.jpg" alt="Equation Escape">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">EQUATION ESCAPE</h3>
+                            <p class="project-description">A 2D platformer action game with a twist of educational element, fight enemies and solve math equations.</p>
+                            <div class="project-tags">
+                                <span>Unity</span>
+                                <span>C#</span>
+                                <span>2D</span>
+                            </div>
+                            <a href="#" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="model-selector">
-                <div class="model-option active" data-model="cube">Cube</div>
-                <div class="model-option" data-model="sphere">Sphere</div>
-                <div class="model-option" data-model="torus">Torus</div>
-            </div>
-            <div class="model-controls">
-                <button id="rotate-model" class="btn"><i class="fas fa-sync"></i> Rotate</button>
-                <button id="stop-model" class="btn"><i class="fas fa-stop"></i> Stop</button>
-            </div>
-        </section>
-        
-        <!-- Projects Section -->
-        <section id="projects">
-            <h1 class="section-title"><i class="fas fa-gamepad"></i>My Projects</h1>
-            <p>Here are some of my recent game development and 3D modeling projects that showcase my technical skills and artistic vision.</p>
             
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/tag.png" alt="placeholder">
+            <!-- Project 3 - Joust.io -->
+            <div class="project-card" data-category="game">
+                <div class="project-image">
+                    <img src="src/joust.png" alt="Joust.io">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">JOUST.IO</h3>
+                            <p class="project-description">A tactical mech combat game with deep customization systems and a hand-crafted dystopian world to explore.</p>
+                            <div class="project-tags">
+                                <span>Unity</span>
+                                <span>Multiplayer</span>
+                                <span>Blender</span>
+                            </div>
+                            <a href="#" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
                     </div>
-                    <h3><i class="fas fa-rocket"></i>Tag Royale</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Unity</span>
-                        <span class="tech-tag">Multiplayer</span>
-                        <span class="tech-tag">Blender</span>
-                    </div>
-                    <p>Tag Royale is a multiplayer game where players must avoid being "tagged" while trying to pass the tag onto others. </p>
-                    <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/equation.jpg" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-plus"></i>Equation Escape</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Unity</span>
-                        <span class="tech-tag">C#</span>
-                        <span class="tech-tag">2D</span>
-                    </div>
-                    <p>A 2D platformer action game with a twist of educational element, fight enemies and solve math equations. </p>
-                    <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/joust.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-horse"></i>Joust.io</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Unity</span>
-                        <span class="tech-tag">Multiplayer</span>
-                        <span class="tech-tag">Blender</span>
-                    </div>
-                    <p>A tactical mech combat game with deep customization systems and a hand-crafted dystopian world to explore.</p>
-                    <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/taxy.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Fake Taxy</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Unity</span>
-                        <span class="tech-tag">3D</span>
-                        <span class="tech-tag">Blender</span>
-                    </div>
-                    <p>Fake Taxy is a stylized low-poly 3D taxi simulation game where the player takes on the role
-                        of a taxi driver in a bustling city.</p>
-                    <a href="#" class="btn"><i class="fas fa-download"></i> Download</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/opengl.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>OpenGL Engine</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">OpenGL</span>
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>A mini-engine built using OpenGL. The engine includes support for scene creation and manipulation, importing 3D models, transforming objects.</p>
-                    <a href="https://github.com/protobar/OpenGL-MiniEngine" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/gas.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Abandoned Gas Station</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">OpenGL</span>
-                        <span class="tech-tag">C++</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Impala in an Abandoned Gas Station.
-                        A spectral forest having an abandoned gas station.
-                        Modeled, textured and rendered in blender 3d.</p>
-                    <a href="https://protobar.artstation.com/projects/yDwgPJ" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/C2.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Courage The Cowardly Dog</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Horrifying look of courage the Cowardly dog's house. Modeled, textured and rendered in blender.</p>
-                    <a href="https://protobar.artstation.com/projects/49JYxq" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/blur.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Blur Miss</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Two racing cars crossing each other, creating an appealing motion blur. Made in blender.</p>
-                    <a href="https://protobar.artstation.com/projects/Kelx9x" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/iso.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Iso Conveyer</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>A project done for client. An isometric looping animation.</p>
-                    <a href="https://protobar.artstation.com/projects/WBEXr3" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/lone.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Lone Tree</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>A guy sitting underneath a tree,
-                        Made in blender.</p>
-                    <a href="https://protobar.artstation.com/projects/Kem3g4" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/Skely3.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Skully</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>A surreal render of a skeleton going up in the sky.</p>
-                    <a href="https://protobar.artstation.com" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/smart.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Smart City</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Isometric animation done for a client.</p>
-                    <a href="https://protobar.artstation.com" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/star.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Starry Car</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Guy holding a rose and laying on the car while watching stars.</p>
-                    <a href="https://protobar.artstation.com" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/cabin.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Snowy Cabin</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Soothing render of a childhood memory, a wooden cabin covered in snow.</p>
-                    <a href="https://protobar.artstation.com" class="btn"><i class="fas fa-eye"></i> View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="src/biker.png" alt="placeholder">
-                    </div>
-                    <h3><i class="fas fa-taxi"></i>Biker Valley</h3>
-                    <div class="project-tech">
-                        <span class="tech-tag">Blender</span>
-                        <span class="tech-tag">3D Modeling</span>
-                        <span class="tech-tag">3D</span>
-                    </div>
-                    <p>Realistic render of a biker passing through spring valley.</p>
-                    <a href="https://protobar.artstation.com" class="btn"><i class="fas fa-eye"></i> View Project</a>
                 </div>
             </div>
-        </section>
+            
+            <!-- Project 4 - Fake Taxy -->
+            <div class="project-card" data-category="game">
+                <div class="project-image">
+                    <img src="src/taxy.png" alt="Fake Taxy">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">FAKE TAXY</h3>
+                            <p class="project-description">A stylized low-poly 3D taxi simulation game where the player takes on the role of a taxi driver in a bustling city.</p>
+                            <div class="project-tags">
+                                <span>Unity</span>
+                                <span>3D</span>
+                                <span>Blender</span>
+                            </div>
+                            <a href="#" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 - OpenGL Engine -->
+            <div class="project-card" data-category="engine">
+                <div class="project-image">
+                    <img src="src/opengl.png" alt="OpenGL Engine">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">OPENGL ENGINE</h3>
+                            <p class="project-description">A mini-engine built using OpenGL. The engine includes support for scene creation and manipulation, importing 3D models, transforming objects.</p>
+                            <div class="project-tags">
+                                <span>OpenGL</span>
+                                <span>C++</span>
+                                <span>3D</span>
+                            </div>
+                            <a href="https://github.com/protobar/OpenGL-MiniEngine" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 - Abandoned Gas Station -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/gas.png" alt="Abandoned Gas Station">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">ABANDONED GAS STATION</h3>
+                            <p class="project-description">Impala in an Abandoned Gas Station. A spectral forest having an abandoned gas station. Modeled, textured and rendered in Blender 3D.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>3D Modeling</span>
+                                <span>Rendering</span>
+                            </div>
+                            <a href="https://protobar.artstation.com/projects/yDwgPJ" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 7 - Courage The Cowardly Dog -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/C2.png" alt="Courage The Cowardly Dog">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">COURAGE THE COWARDLY DOG</h3>
+                            <p class="project-description">Horrifying look of Courage the Cowardly Dog's house. Modeled, textured and rendered in Blender.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>3D Modeling</span>
+                                <span>Fan Art</span>
+                            </div>
+                            <a href="https://protobar.artstation.com/projects/49JYxq" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 8 - Blur Miss -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/blur.png" alt="Blur Miss">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">BLUR MISS</h3>
+                            <p class="project-description">Two racing cars crossing each other, creating an appealing motion blur. Made in Blender with custom shaders for the blur effect.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>3D Modeling</span>
+                                <span>Motion Blur</span>
+                            </div>
+                            <a href="https://protobar.artstation.com/projects/Kelx9x" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 9 - Iso Conveyer -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/iso.png" alt="Iso Conveyer">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">ISO CONVEYER</h3>
+                            <p class="project-description">An isometric looping animation created for a client. Features smooth conveyor mechanics and realistic lighting.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>Animation</span>
+                                <span>Isometric</span>
+                            </div>
+                            <a href="https://protobar.artstation.com/projects/WBEXr3" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 10 - Lone Tree -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/lone.png" alt="Lone Tree">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">LONE TREE</h3>
+                            <p class="project-description">A peaceful scene depicting a person resting under a lone tree. Focused on atmosphere and lighting to create a serene mood.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>3D Modeling</span>
+                                <span>Environment</span>
+                            </div>
+                            <a href="https://protobar.artstation.com/projects/Kem3g4" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 11 - Skully -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/Skely3.png" alt="Skully">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">SKULLY</h3>
+                            <p class="project-description">A surreal render of a skeleton going up in the sky. Artistic exploration of afterlife themes.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>3D Modeling</span>
+                                <span>Surrealism</span>
+                            </div>
+                            <a href="https://protobar.artstation.com" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 12 - Smart City -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/smart.png" alt="Smart City">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">SMART CITY</h3>
+                            <p class="project-description">Isometric animation of a futuristic smart city concept. Created for a client presentation on urban technology integration.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>Isometric</span>
+                                <span>Animation</span>
+                            </div>
+                            <a href="https://protobar.artstation.com" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 13 - Starry Car -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/star.png" alt="Starry Car">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">STARRY CAR</h3>
+                            <p class="project-description">Romantic scene with a person holding a rose while laying on a car and gazing at the stars. Atmospheric night lighting.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>Environment</span>
+                                <span>Lighting</span>
+                            </div>
+                            <a href="https://protobar.artstation.com" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 14 - Snowy Cabin -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/cabin.png" alt="Snowy Cabin">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">SNOWY CABIN</h3>
+                            <p class="project-description">Soothing render of a childhood memory, a wooden cabin covered in snow. Focus on atmosphere and nostalgic winter ambiance.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>Environment</span>
+                                <span>Winter Scene</span>
+                            </div>
+                            <a href="https://protobar.artstation.com" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 15 - Biker Valley -->
+            <div class="project-card" data-category="3d">
+                <div class="project-image">
+                    <img src="src/biker.png" alt="Biker Valley">
+                    <div class="project-overlay">
+                        <div class="project-details text-center">
+                            <h3 class="project-title">BIKER VALLEY</h3>
+                            <p class="project-description">Realistic render of a biker passing through a vibrant spring valley. Emphasis on natural lighting and environmental detail.</p>
+                            <div class="project-tags">
+                                <span>Blender</span>
+                                <span>Landscape</span>
+                                <span>Realism</span>
+                            </div>
+                            <a href="https://protobar.artstation.com" class="btn project-btn">VIEW PROJECT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        <!-- About Section -->
-        <section id="about">
-            <h1 class="section-title"><i class="fas fa-user"></i>About Me</h1>
-            <div class="about-content">
+        <div class="view-more-container text-center">
+            <a href="https://protobar.artstation.com/" class="btn primary-btn view-more">VIEW ALL PROJECTS</a>
+        </div>
+    </div>
+</section>
+
+    <!-- 3D Model Viewer Section -->
+    <section class="model-viewer-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title neon-text">INTERACTIVE 3D MODELS</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="model-viewer-container">
+                <div class="model-controls">
+                    <div class="model-select">
+                        <label for="model-dropdown">SELECT MODEL:</label>
+                        <select id="model-dropdown">
+                            <option value="cyberbike">Tag Royale Coin</option>
+                            <option value="synthgun">HP LAPTOP</option>
+                            <option value="retrohelmet">RETRO CONTROLLER</option>
+                        </select>
+                    </div>
+                    <div class="model-options">
+                        <button id="toggle-wireframe" class="option-btn">WIREFRAME</button>
+                        <button id="toggle-rotation" class="option-btn active">ROTATION</button>
+                        <div class="color-options">
+                            <button class="color-option" data-color="#FF41B4" style="background-color: #FF41B4;"></button>
+                            <button class="color-option" data-color="#A359FF" style="background-color: #A359FF;"></button>
+                            <button class="color-option" data-color="#00F0FF" style="background-color: #00F0FF;"></button>
+                            <button class="color-option" data-color="#FFDE59" style="background-color: #FFDE59;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="model-viewer">
+                    <canvas id="model-canvas"></canvas>
+                </div>
+                <div class="model-info">
+                    <h3 id="model-name" class="text-center">Tag Royale Coin</h3>
+                    <p id="model-description">Tag Royale exclusive currency in Cybperpunk mode".</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">POLYGONS</span>
+                            <span class="stat-value">1,632</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">TEXTURES</span>
+                            <span class="stat-value">4K</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">SOFTWARE</span>
+                            <span class="stat-value">Blender</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Games Section -->
+<section id="games" class="games">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title neon-text">RETRO ARCADE</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <div class="games-intro text-center">
+            <p>Experience interactive retro-style games built with modern web technologies. Use arrow keys or WASD to control.</p>
+        </div>
+        
+        <!-- Game Selection -->
+        <div class="game-selection">
+            <div class="game-tab active" data-game="neon-rider">
+                <div class="game-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <div class="game-info">
+                    <h3>NEON RIDER</h3>
+                    <p>Navigate through a neon tunnel avoiding obstacles</p>
+                </div>
+            </div>
+            
+            <div class="game-tab" data-game="grid-runner">
+                <div class="game-icon">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div class="game-info">
+                    <h3>GRID RUNNER</h3>
+                    <p>Collect data fragments while avoiding firewalls</p>
+                </div>
+            </div>
+            
+            <div class="game-tab" data-game="synth-beat">
+                <div class="game-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+                <div class="game-info">
+                    <h3>SYNTH BEAT</h3>
+                    <p>Rhythm game with synthwave soundtrack</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Container -->
+        <div class="game-container">
+            <div class="game-ui">
+                <div class="game-score">
+                    <span class="score-label">SCORE</span>
+                    <span class="score-value" id="game-score">0</span>
+                </div>
+                <div class="game-health">
+                    <span class="health-label">HEALTH</span>
+                    <div class="health-bar">
+                        <div class="health-fill" id="health-fill"></div>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="start-game" class="btn primary-btn">START GAME</button>
+                    <button id="pause-game" class="btn secondary-btn">PAUSE</button>
+                </div>
+            </div>
+            
+            <div class="game-canvas-container">
+                <canvas id="game-canvas"></canvas>
+                
+                <!-- Game Start Screen -->
+                <div class="game-overlay" id="game-start">
+                    <div class="overlay-content">
+                        <h2 class="glitch" data-text="NEON RIDER">NEON RIDER</h2>
+                        <p>Navigate through the neon tunnel and avoid obstacles</p>
+                        <div class="controls-guide">
+                            <div class="control-item">
+                                <div class="key-group">
+                                    <div class="key">W</div>
+                                    <div class="key-row">
+                                        <div class="key">A</div>
+                                        <div class="key">S</div>
+                                        <div class="key">D</div>
+                                    </div>
+                                </div>
+                                <span>or</span>
+                                <div class="key-group">
+                                    <div class="key">↑</div>
+                                    <div class="key-row">
+                                        <div class="key">←</div>
+                                        <div class="key">↓</div>
+                                        <div class="key">→</div>
+                                    </div>
+                                </div>
+                                <p>Move</p>
+                            </div>
+                            <div class="control-item">
+                                <div class="key space-key">SPACE</div>
+                                <p>Boost</p>
+                            </div>
+                        </div>
+                        <button id="start-btn" class="btn primary-btn">START GAME</button>
+                    </div>
+                </div>
+                
+                <!-- Game Over Screen -->
+                <div class="game-overlay" id="game-over" style="display: none;">
+                    <div class="overlay-content">
+                        <h2 class="glitch" data-text="GAME OVER">GAME OVER</h2>
+                        <div class="score-display">
+                            <p>SCORE: <span class="final-score">0</span></p>
+                            <p>HIGHSCORE: <span class="highscore">0</span></p>
+                        </div>
+                        <button id="restart-btn" class="btn primary-btn">PLAY AGAIN</button>
+                    </div>
+                </div>
+                
+                <!-- Pause Screen -->
+                <div class="game-overlay" id="game-paused" style="display: none;">
+                    <div class="overlay-content">
+                        <h2>PAUSED</h2>
+                        <button id="resume-btn" class="btn primary-btn">RESUME</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- High Scores -->
+        <div class="highscores">
+            <h3 class="text-center">HIGH SCORES</h3>
+            <div class="highscore-table">
+                <div class="table-header">
+                    <div class="rank">RANK</div>
+                    <div class="player">PLAYER</div>
+                    <div class="score">SCORE</div>
+                    <div class="date">DATE</div>
+                </div>
+                <div class="table-body" id="highscore-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title neon-text">SKILLS & EXPERTISE</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3 class="category-title text-center">GAME DEVELOPMENT</h3>
+                    <div class="skill-grid">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Unity</span>
+                                <span class="skill-level">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">C#</span>
+                                <span class="skill-level">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Unreal Engine</span>
+                                <span class="skill-level">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Game Design</span>
+                                <span class="skill-level">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="category-title text-center">3D MODELING & ANIMATION</h3>
+                    <div class="skill-grid">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Blender</span>
+                                <span class="skill-level">92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">ZBrush</span>
+                                <span class="skill-level">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Substance Painter</span>
+                                <span class="skill-level">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Character Animation</span>
+                                <span class="skill-level">78%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="78"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3 class="category-title text-center">OTHER SKILLS</h3>
+                    <div class="skill-grid">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Photoshop</span>
+                                <span class="skill-level">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Photography</span>
+                                <span class="skill-level">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="70"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">UI/UX Design</span>
+                                <span class="skill-level">65%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="65"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Cinematography</span>
+                                <span class="skill-level">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="60"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title neon-text">ABOUT ME</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="about-container">
                 <div class="about-image">
-                    <img src="src/shayan.jpg" alt="placeholder">
+                    <div class="image-frame">
+                        <img src="src/shayan.jpg" alt="Profile Picture">
+                        <div class="frame-corners">
+                            <span class="corner top-left"></span>
+                            <span class="corner top-right"></span>
+                            <span class="corner bottom-left"></span>
+                            <span class="corner bottom-right"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="about-text">
-                    <h3>Game Developer & 3D Artist with a Passion for Innovation</h3>
-                    <p>With over 5 years of experience in game development and 3D modeling, I've had the privilege of working on a diverse range of projects. My journey began with a fascination for how games create immersive worlds and evolved into a career where I blend technical expertise with artistic vision.</p>
-                    <p>I specialize in creating atmospheric environments and optimizing game assets for performance. My approach combines old-school gaming aesthetics with modern rendering techniques to create unique visual experiences.</p>
+                <div class="about-content">
+                    <h3 class="about-name glitch text-center" data-text="Muhammad Shayan">Muhammad Shayan</h3>
+                    <h4 class="about-title text-center">Game Developer & 3D Artist</h4>
+                    <p class="about-bio">Developing engaging gaming experiences is my specialty as a 3D artist and game
+                        developer. UX/UI design, animation, multiplayer integration, backend architecture, and
+                        game mechanics are my areas of expertise. I provide creative, high-quality solutions
+                        with flawless database administration and third-party integrations, having expertise with
+                        Web3 and Unity projects.
+                        </p>
+                    
+                    <div class="about-info">
+                        <div class="info-item">
+                            <span class="info-label">LOCATION:</span>
+                            <span class="info-value">Islamabad, Pakistan</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">EMAIL:</span>
+                            <span class="info-value">mshayan4506@gmail.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">AVAILABILITY:</span>
+                            <span class="info-value">Freelance / Contract</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links text-center">
+                        <a href="https://github.com/protobar" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://protobar.artstation.com/" class="social-link"><i class="fab fa-artstation"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/proto-mos/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/_mo_shayan/?__pwa=1#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="https://drive.google.com/drive/folders/1YDdTl49h8FKNz8Th3RO-Nz6sKUPXgtgD?usp=sharing" class="btn primary-btn download-btn">
+                            <i class="fas fa-download"></i> DOWNLOAD RESUME
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title neon-text">GET IN TOUCH</h2>
+                <div class="section-line"></div>
             </div>
             
-            <div class="skills">
-                <div class="skill-category">
-                    <h4><i class="fas fa-code"></i>Development Skills</h4>
-                    <div class="skill-bars">
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fab fa-unity skill-icon"></i>Unity/C#</span>
-                                <span>90%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="90"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fas fa-code-branch skill-icon"></i>C++</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="75"></div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h4><i class="fas fa-paint-brush"></i>3D Skills</h4>
-                    <div class="skill-bars">
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fas fa-cube skill-icon"></i>Blender</span>
-                                <span>95%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="95"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fas fa-object-group skill-icon"></i>3D Animation</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fas fa-layer-group skill-icon"></i>3D Modeling</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="85"></div>
-                            </div>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-bar-label">
-                                <span><i class="fas fa-pencil-alt skill-icon"></i>Sculpting</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="skill-bar-bg">
-                                <div class="skill-bar-fill" data-width="75"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section id="contact">
-            <h1 class="section-title"><i class="fas fa-envelope"></i>Get In Touch</h1>
-            <div class="contact-content">
+            <div class="contact-container">
                 <div class="contact-info">
-                    <h3>Let's Work Together</h3>
-                    <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    <h3 class="contact-heading text-center">LET'S WORK TOGETHER</h3>
+                    <p class="contact-text">Interested in collaborating on a project or have questions about my work? Feel free to reach out using the contact form or through any of my social channels.</p>
                     
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Islamabad, Pakistan</span>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 class="method-title">EMAIL</h4>
+                                <p class="method-value">mshayan4506@gmail.com</p>
+                            </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>mshayan4506@gmail.com</span>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 class="method-title">PHONE</h4>
+                                <p class="method-value">+92 3005506566</p>
+                            </div>
                         </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+923005506566</span>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4 class="method-title">LOCATION</h4>
+                                <p class="method-value">Islamabad, Pakistan</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="social-links">
-                        <a href="https://github.com/protobar" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="https://protobar.artstation.com/" class="social-link"><i class="fab fa-artstation"></i></a>
+                    <div class="availability-status">
+                        <div class="status-indicator available"></div>
+                        <p class="status-text">Currently available for freelance & contract work</p>
                     </div>
                 </div>
                 
-                <div class="contact-form">
-                    <form id="contact-form" action="https://formspree.io/f/xpwpadpp" method="POST">
+                <div class="contact-form-container">
+                    <form id="contact-form" class="contact-form" action="https://formspree.io/f/xpwpadpp" method="POST">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">NAME</label>
                             <input type="text" id="name" name="name" required>
+                            <div class="input-focus-effect"></div>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">EMAIL</label>
                             <input type="email" id="email" name="email" required>
+                            <div class="input-focus-effect"></div>
                         </div>
                         <div class="form-group">
-                            <label for="subject">Subject</label>
+                            <label for="subject">SUBJECT</label>
                             <input type="text" id="subject" name="subject" required>
+                            <div class="input-focus-effect"></div>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
+                            <label for="message">MESSAGE</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <div class="input-focus-effect"></div>
                         </div>
-                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
-                        <div id="form-status" style="display:none; margin-top:15px;"></div>
+                        <div class="form-status-container">
+                            <div id="form-status" class="form-status"></div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn primary-btn submit-btn">
+                                <span class="btn-text">SEND MESSAGE</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
-        </section>
-    </main>
-    
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/protobar" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="https://protobar.artstation.com/" class="social-link"><i class="fab fa-artstation"></i></a>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">RETRO<span class="logo-accent">WAVE</span></span>
+                    <p class="footer-tagline">Game Development & 3D Art</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-nav">
+                        <h3 class="footer-heading">NAVIGATION</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#skills">Skills</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-social">
+                        <h3 class="footer-heading">SOCIAL</h3>
+                        <ul>
+                            <li><a href="https://github.com/protobar"><i class="fab fa-github"></i> GitHub</a></li>
+                            <li><a href="https://protobar.artstation.com/"><i class="fab fa-artstation"></i> ArtStation</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                            <li><a href="https://www.linkedin.com/in/proto-mos/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                            <li><a href="https://www.instagram.com/_mo_shayan/?__pwa=1#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <p>&copy; 2025 RETRODEV. All Rights Reserved.</p>
+            
+            <div class="footer-bottom text-center">
+                <p class="copyright">&copy; 2025 Muhammad Shayan. All Rights Reserved.</p>
+                <p class="credits">Designed with <i class="fas fa-heart"></i> and synthwave vibes</p>
+            </div>
         </div>
     </footer>
-    
-    <script src="script.js"></script>
+
+    <!-- Retro Music Player -->
+    <div class="music-player minimized">
+        <div class="music-player-header">
+            <h3 class="player-title">RETRO PLAYER</h3>
+            <div class="player-controls-top">
+                <button class="expand-btn"><i class="fas fa-chevron-up"></i></button>
+                <button class="player-toggle"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <div class="music-player-body">
+            <div class="album-art-container">
+                <div class="album-art">
+                    <img src="https://f4.bcbits.com/img/a1435058381_16.jpg" alt="Album Art">
+                </div>
+            </div>
+            
+            <div class="track-info-container">
+                <h2 class="track-title">Cyberpunk 2077</h2>
+                <p class="artist-name">KieLoKaz</p>
+            </div>
+            
+            <div class="player-controls-main">
+                <button id="prev-btn" class="control-btn"><i class="fas fa-step-backward"></i></button>
+                <button id="play-btn" class="control-btn"><i class="fas fa-play"></i></button>
+                <button id="pause-btn" class="control-btn"><i class="fas fa-pause"></i></button>
+                <button id="next-btn" class="control-btn"><i class="fas fa-step-forward"></i></button>
+            </div>
+            
+            <div class="progress-container">
+                <div class="time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="volume-container">
+                <div class="volume-icon"><i class="fas fa-volume-up"></i></div>
+                <div class="volume-control">
+                    <input type="range" min="0" max="1" step="0.01" value="0.5">
+                </div>
+            </div>
+            
+            <div class="visualizer-container">
+                <!-- Visualizer bars will be dynamically generated -->
+            </div>
+        </div>
+        
+        <div class="music-player-footer">
+            <div class="playlist-container">
+                <!-- Playlist items will be dynamically generated -->
+            </div>
+        </div>
+        
+        <!-- Hidden audio element -->
+        <audio id="audio-element"></audio>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/three-model.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/neon-rider.js"></script>
+    <script src="js/retro-music-player.js"></script>
+    <script src="js/synthwave-cursor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var contactForm = document.getElementById("contact-form");
+            var submitBtn = contactForm.querySelector(".submit-btn");
+            var btnText = submitBtn.querySelector(".btn-text");
+            var formStatus = document.getElementById("form-status");
+            var originalBtnText = btnText.textContent;
+            
+            contactForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+                
+                // Show sending state
+                submitBtn.classList.add("sending");
+                btnText.textContent = "SENDING";
+                formStatus.textContent = "";
+                formStatus.className = "form-status";
+                
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch(contactForm.action, {
+                        method: contactForm.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        // Success message
+                        formStatus.textContent = "Thanks for your message! I'll respond as soon as possible.";
+                        formStatus.classList.add("success");
+                        contactForm.reset();
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(function() {
+                            submitBtn.classList.remove("sending");
+                            btnText.textContent = originalBtnText;
+                        }, 1000);
+                    } else {
+                        const data = await response.json();
+                        let errorMessage = "Oops! There was a problem submitting your form.";
+                        
+                        if (data && data.errors) {
+                            errorMessage = data.errors.map(error => error.message).join(", ");
+                        }
+                        
+                        // Error message
+                        formStatus.textContent = errorMessage;
+                        formStatus.classList.add("error");
+                        
+                        // Reset button
+                        submitBtn.classList.remove("sending");
+                        btnText.textContent = originalBtnText;
+                    }
+                } catch (error) {
+                    // Network or other error
+                    formStatus.textContent = "Oops! There was a network problem. Please try again.";
+                    formStatus.classList.add("error");
+                    
+                    // Reset button
+                    submitBtn.classList.remove("sending");
+                    btnText.textContent = originalBtnText;
+                }
+            });
+        });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fix for keyboard input issues in form fields
+                const formInputs = document.querySelectorAll('#contact-form input, #contact-form textarea');
+                
+                // Remove any existing event listeners that might be interfering
+                formInputs.forEach(input => {
+                    // Clone the element to remove all event listeners
+                    const clone = input.cloneNode(true);
+                    input.parentNode.replaceChild(clone, input);
+                });
+                
+                // Make sure focus works properly
+                const refreshedInputs = document.querySelectorAll('#contact-form input, #contact-form textarea');
+                refreshedInputs.forEach(input => {
+                    // Add focus effect
+                    input.addEventListener('focus', function() {
+                        this.parentNode.querySelector('.input-focus-effect').style.width = '100%';
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.parentNode.querySelector('.input-focus-effect').style.width = '0';
+                    });
+                    
+                    // Explicitly allow key events
+                    input.addEventListener('keydown', function(e) {
+                        // Make sure propagation continues and default behavior isn't prevented
+                        e.stopPropagation();
+                    }, true);
+                });
+                
+                // Fix any global keybindings that might be interfering
+                const originalKeydownHandlers = {};
+                
+                // Store original document keydown handlers
+                const originalDocumentKeydown = document.onkeydown;
+                
+                // Disable global keydown handlers when focusing on input
+                refreshedInputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        // Temporarily disable any global keydown handlers when input is focused
+                        document.onkeydown = null;
+                        
+                        // Also disable any other element's keydown handlers that might be interfering
+                        document.querySelectorAll('body, html, .container, section').forEach(el => {
+                            if (el.onkeydown) {
+                                originalKeydownHandlers[el] = el.onkeydown;
+                                el.onkeydown = null;
+                            }
+                        });
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        // Restore original handlers when input loses focus
+                        document.onkeydown = originalDocumentKeydown;
+                        
+                        // Restore other elements' handlers
+                        Object.keys(originalKeydownHandlers).forEach(el => {
+                            el.onkeydown = originalKeydownHandlers[el];
+                        });
+                    });
+                });
+                
+                // Also fix potential cursor style issues
+                document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(input => {
+                    input.style.cursor = 'text';
+                });
+            });
+            </script>
 </body>
-<script>
-    var form = document.getElementById("my-form");
-    
-    async function handleSubmit(event) {
-      event.preventDefault();
-      var status = document.getElementById("my-form-status");
-      var data = new FormData(event.target);
-      fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            'Accept': 'application/json'
-        }
-      }).then(response => {
-        if (response.ok) {
-          status.innerHTML = "Thanks for your submission!";
-          form.reset()
-        } else {
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-            } else {
-              status.innerHTML = "Oops! There was a problem submitting your form"
-            }
-          })
-        }
-      }).catch(error => {
-        status.innerHTML = "Oops! There was a problem submitting your form"
-      });
-    }
-    form.addEventListener("submit", handleSubmit)
-  </script>
 </html>

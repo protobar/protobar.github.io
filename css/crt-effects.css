@@ -1,0 +1,284 @@
+/* ===== ENHANCED CRT EFFECTS ===== */
+:root {
+  --scanline-size: 2px;
+  --scanline-intensity: 0.15;
+  --crt-curve: 5px;
+  --flicker-speed: 0.15s;
+  --flicker-intensity: 0.03;
+  --static-noise-intensity: 0.05;
+  --glow-intensity: 1;
+}
+
+/* Enhanced CRT screen effect */
+.crt-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: hidden;
+}
+
+/* Apply CRT border frame */
+.crt-frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 var(--crt-curve) 3px rgba(10, 0, 30, 0.8);
+  border-radius: var(--crt-curve);
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Advanced scanlines effect */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, var(--scanline-intensity)) 51%,
+    transparent 51%
+  );
+  background-size: 100% var(--scanline-size);
+  animation: scanline-scroll 8s linear infinite;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Scrolling scanlines effect */
+@keyframes scanline-scroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 calc(var(--scanline-size) * 100); }
+}
+
+/* CRT flicker effect */
+.crt-flicker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  opacity: 0;
+  mix-blend-mode: overlay;
+  animation: flicker 0.3s infinite;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* Flicker animation */
+@keyframes flicker {
+  0% { opacity: 0; }
+  5% { opacity: 0; }
+  6% { opacity: var(--flicker-intensity); }
+  10% { opacity: 0; }
+  11% { opacity: var(--flicker-intensity); }
+  16% { opacity: 0; }
+  20% { opacity: var(--flicker-intensity); }
+  68% { opacity: var(--flicker-intensity); }
+  70% { opacity: 0; }
+  71% { opacity: var(--flicker-intensity); }
+  100% { opacity: 0; }
+}
+
+/* RGB split effect */
+.rgb-split {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9996;
+}
+
+.rgb-split::before,
+.rgb-split::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  mix-blend-mode: screen;
+}
+
+.rgb-split::before {
+  background-color: rgba(255, 0, 0, 0.1);
+  transform: translate(-2px, 0);
+  animation: rgb-split-horizontal 2s infinite alternate;
+}
+
+.rgb-split::after {
+  background-color: rgba(0, 255, 255, 0.1);
+  transform: translate(2px, 0);
+  animation: rgb-split-horizontal 3s infinite alternate;
+}
+
+@keyframes rgb-split-horizontal {
+  0% { transform: translate(-2px, 0); }
+  100% { transform: translate(2px, 0); }
+}
+
+/* Vignette effect */
+.vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  z-index: 9995;
+}
+
+/* Static noise effect */
+.static-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/png;base64,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');
+  opacity: var(--static-noise-intensity);
+  animation: static-noise 0.2s steps(2) infinite;
+  z-index: 9994;
+  pointer-events: none;
+}
+
+@keyframes static-noise {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(1%, 1%); }
+  30% { transform: translate(-1%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-1%, -1%); }
+  60% { transform: translate(1%, 1%); }
+  70% { transform: translate(-1%, 1%); }
+  80% { transform: translate(1%, -1%); }
+  90% { transform: translate(-1%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* On/Off Animation */
+.crt-off {
+  animation: turn-off 0.4s ease-out forwards;
+}
+
+.crt-on {
+  animation: turn-on 1s ease-in forwards;
+}
+
+@keyframes turn-off {
+  0% { 
+    transform: scale(1); 
+    opacity: 1;
+    filter: brightness(1);
+  }
+  10% {
+    transform: scale(1.1, 0.9);
+    filter: brightness(2);
+  }
+  30% { 
+    transform: scale(0.1, 0.01);
+    filter: brightness(2);
+    opacity: 0.5;
+  }
+  100% { 
+    transform: scale(0);
+    opacity: 0;
+    filter: brightness(0);
+  }
+}
+
+@keyframes turn-on {
+  0% {
+    transform: scale(0);
+    filter: brightness(0);
+    opacity: 0;
+  }
+  5% {
+    transform: scale(0.1, 0.01);
+    filter: brightness(1);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(1.1, 0.8);
+    filter: brightness(2);
+  }
+  40% {
+    transform: scale(0.98, 1.02);
+    filter: brightness(1.5);
+  }
+  60% {
+    transform: scale(1.02, 0.98);
+    filter: brightness(1.2);
+  }
+  80% {
+    transform: scale(0.99, 1.01);
+    filter: brightness(1.1);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+}
+
+/* Screen off state */
+.screen-off {
+  background-color: #000;
+}
+
+.screen-off * {
+  visibility: hidden !important;
+}
+
+.screen-off .crt-effect,
+.screen-off .power-button {
+  visibility: visible !important;
+}
+
+/* For better mobile performance */
+@media (max-width: 768px) {
+  :root {
+    --scanline-size: 3px;
+    --scanline-intensity: 0.1;
+  }
+  
+  .static-noise {
+    opacity: calc(var(--static-noise-intensity) * 0.5);
+  }
+}
+
+/* High performance mode switch */
+.reduced-effects .scanlines {
+  opacity: 0.3;
+  animation: none;
+}
+
+.reduced-effects .static-noise {
+  opacity: 0.01;
+  animation: none;
+}
+
+.reduced-effects .rgb-split {
+  display: none;
+}
+
+.reduced-effects .crt-flicker {
+  animation: flicker 2s infinite;
+}
